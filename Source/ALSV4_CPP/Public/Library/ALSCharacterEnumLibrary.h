@@ -59,7 +59,9 @@ enum class EALSMovementState : uint8
 	Grounded,
 	InAir,
 	Mantling,
-	Ragdoll
+	Ragdoll,
+	InCover,
+	StandAndShoot
 };
 
 /**
@@ -171,4 +173,59 @@ enum class EALSSpawnType : uint8
 {
 	Location,
 	Attached
+};
+
+UENUM(BlueprintType)
+enum class EALSBaseAnimSet : uint8
+{
+	Mobility,
+	RifleRelaxed,
+	RifleAim
+};
+
+UENUM(BlueprintType)
+enum class EALSCoverAction : uint8
+{
+	InCover,
+	Peek,
+	Shooting,
+	Relaod
+};
+
+UENUM(BlueprintType)
+enum class EALSCoverAttackMode : uint8
+{
+	Normal,
+	Up
+};
+
+UENUM(BlueprintType)
+enum class EALSCoverDirection : uint8
+{
+	Left,
+	Right
+};
+
+UENUM(BlueprintType)
+enum class EALSCoverType : uint8
+{
+	High,
+	Low
+};
+
+UENUM(BlueprintType)
+enum class EALSShotType : uint8
+{
+	SingleShot,
+	BurstFireThree,
+	FullAuto
+};
+
+UENUM(BlueprintType)
+enum class EALSWeaponCombatAction : uint8
+{
+	Shooting,
+	Reload,
+	UnjamWeapon,
+	Idle
 };

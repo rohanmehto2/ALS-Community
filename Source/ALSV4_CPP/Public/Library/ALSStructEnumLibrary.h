@@ -37,6 +37,12 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
 	bool Ragdoll_ = false;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool InCover_ = false;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool StandAndShoot_ = false;
+
 public:
 	FALSMovementState()
 	{
@@ -49,6 +55,8 @@ public:
 	const bool& InAir() const { return InAir_; }
 	const bool& Mantling() const { return Mantling_; }
 	const bool& Ragdoll() const { return Ragdoll_; }
+	const bool& InCover() const { return InCover_; }
+	const bool& StandAndShoot() const { return StandAndShoot_; }
 
 	operator EALSMovementState() const { return State; }
 
@@ -60,6 +68,8 @@ public:
 		InAir_ = State == EALSMovementState::InAir;
 		Mantling_ = State == EALSMovementState::Mantling;
 		Ragdoll_ = State == EALSMovementState::Ragdoll;
+		InCover_ = State == EALSMovementState::InCover;
+		StandAndShoot_ = State == EALSMovementState::StandAndShoot;
 	}
 };
 
@@ -398,5 +408,280 @@ public:
 		State = NewState;
 		None_ = State == EALSGroundedEntryState::None;
 		Roll_ = State == EALSGroundedEntryState::Roll;
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FALSBaseAnimSet
+{
+	GENERATED_BODY()
+
+private:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	EALSBaseAnimSet AnimSet = EALSBaseAnimSet::RifleAim;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Mobility_ = false;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool RifleRelaxed_ = false;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool RifleAim_ = true;
+
+public:
+	FALSBaseAnimSet()
+	{
+	}
+
+	FALSBaseAnimSet(const EALSBaseAnimSet InitialAnimSet) { *this = InitialAnimSet; }
+
+	const bool& Mobility() const { return Mobility_; }
+	const bool& RifleRelaxed() const { return RifleRelaxed_; }
+	const bool& RifleAim() const { return RifleAim_; }
+
+	operator EALSBaseAnimSet() const { return AnimSet; }
+
+	void operator=(const EALSBaseAnimSet NewAnimSet)
+	{
+		AnimSet = NewAnimSet;
+		Mobility_ = AnimSet == EALSBaseAnimSet::Mobility;
+		RifleRelaxed_ = AnimSet == EALSBaseAnimSet::RifleRelaxed;
+		RifleAim_ = AnimSet == EALSBaseAnimSet::RifleAim;
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FALSCoverAction
+{
+	GENERATED_BODY()
+
+private:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	EALSCoverAction CoverAction = EALSCoverAction::InCover;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool InCover_ = true;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Peek_ = false;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Shooting_ = false;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Reload_ = false;
+
+public:
+	FALSCoverAction()
+	{
+	}
+
+	FALSCoverAction(const EALSCoverAction InitialCoverAction) { *this = InitialCoverAction; }
+
+	const bool& InCover() const { return InCover_; }
+	const bool& Peek() const { return Peek_; }
+	const bool& Shooting() const { return Shooting_; }
+	const bool& Reload() const { return Reload_; }
+
+	operator EALSCoverAction() const { return CoverAction; }
+
+	void operator=(const EALSCoverAction NewCoverAction)
+	{
+		CoverAction = NewCoverAction;
+		InCover_ = CoverAction == EALSCoverAction::InCover;
+		Peek_ = CoverAction == EALSCoverAction::Peek;
+		Shooting_ = CoverAction == EALSCoverAction::Shooting;
+		Reload_ = CoverAction == EALSCoverAction::Relaod;
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FALSCoverAttackMode
+{
+	GENERATED_BODY()
+
+private:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	EALSCoverAttackMode CoverAttackMode = EALSCoverAttackMode::Normal;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Normal_ = true;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Up_ = false;
+
+public:
+	FALSCoverAttackMode()
+	{
+	}
+
+	FALSCoverAttackMode(const EALSCoverAttackMode InitialCoverAttackMode) { *this = InitialCoverAttackMode; }
+
+	const bool& Normal() const { return Normal_; }
+	const bool& Up() const { return Up_; }
+
+	operator EALSCoverAttackMode() const { return CoverAttackMode; }
+
+	void operator=(const EALSCoverAttackMode NewCoverAttackMode)
+	{
+		CoverAttackMode = NewCoverAttackMode;
+		Normal_ = CoverAttackMode == EALSCoverAttackMode::Normal;
+		Up_ = CoverAttackMode == EALSCoverAttackMode::Up;
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FALSCoverDirection
+{
+	GENERATED_BODY()
+
+private:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	EALSCoverDirection CoverDirection = EALSCoverDirection::Left;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Left_ = true;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Right_ = false;
+
+public:
+	FALSCoverDirection()
+	{
+	}
+
+	FALSCoverDirection(const EALSCoverDirection InitialCoverDirection) { *this = InitialCoverDirection; }
+
+	const bool& Left() const { return Left_; }
+	const bool& Right() const { return Right_; }
+
+	operator EALSCoverDirection() const { return CoverDirection; }
+
+	void operator=(const EALSCoverDirection NewCoverDirection)
+	{
+		CoverDirection = NewCoverDirection;
+		Left_ = CoverDirection == EALSCoverDirection::Left;
+		Right_ = CoverDirection == EALSCoverDirection::Right;
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FALSCoverType
+{
+	GENERATED_BODY()
+
+private:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	EALSCoverType CoverType = EALSCoverType::High;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool High_ = true;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Low_ = false;
+
+public:
+	FALSCoverType()
+	{
+	}
+
+	FALSCoverType(const EALSCoverType InitialCoverType) { *this = InitialCoverType; }
+
+	const bool& High() const { return High_; }
+	const bool& Low() const { return Low_; }
+
+	operator EALSCoverType() const { return CoverType; }
+
+	void operator=(const EALSCoverType NewCoverType)
+	{
+		CoverType = NewCoverType;
+		High_ = CoverType == EALSCoverType::High;
+		Low_ = CoverType == EALSCoverType::Low;
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FALSShotType
+{
+	GENERATED_BODY()
+
+private:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	EALSShotType ShotType = EALSShotType::SingleShot;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool SingleShot_ = true;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool BurstFireThree_ = false;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool FullAuto_ = false;
+
+public:
+	FALSShotType()
+	{
+	}
+
+	FALSShotType(const EALSShotType InitialShotType) { *this = InitialShotType; }
+
+	const bool& SingleShot() const { return SingleShot_; }
+	const bool& BurstFireThree() const { return BurstFireThree_; }
+	const bool& FullAuto() const { return FullAuto_; }
+
+	operator EALSShotType() const { return ShotType; }
+
+	void operator=(const EALSShotType NewShotType)
+	{
+		ShotType = NewShotType;
+		SingleShot_ = ShotType == EALSShotType::SingleShot;
+		BurstFireThree_ = ShotType == EALSShotType::BurstFireThree;
+		FullAuto_ = ShotType == EALSShotType::FullAuto;
+	}
+};
+
+USTRUCT(BlueprintType)
+struct FALSWeaponCombatAction
+{
+	GENERATED_BODY()
+
+private:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	EALSWeaponCombatAction WeaponCombatAction = EALSWeaponCombatAction::Shooting;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Shooting_ = true;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Reload_ = false;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool UnjamWeapon_ = false;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = true), Category = "ALS|Movement System")
+	bool Idle_ = false;
+
+public:
+	FALSWeaponCombatAction()
+	{
+	}
+
+	FALSWeaponCombatAction(const EALSWeaponCombatAction InitialWeaponCombatAction) { *this = InitialWeaponCombatAction; }
+
+	const bool& Shooting() const { return Shooting_; }
+	const bool& Reload() const { return Reload_; }
+	const bool& UnjamWeapon() const { return UnjamWeapon_; }
+	const bool& Idle() const { return Idle_; }
+
+	operator EALSWeaponCombatAction() const { return WeaponCombatAction; }
+
+	void operator=(const EALSWeaponCombatAction NewWeaponCombatAction)
+	{
+		WeaponCombatAction = NewWeaponCombatAction;
+		Shooting_ = WeaponCombatAction == EALSWeaponCombatAction::Shooting;
+		Reload_ = WeaponCombatAction == EALSWeaponCombatAction::Reload;
+		UnjamWeapon_ = WeaponCombatAction == EALSWeaponCombatAction::UnjamWeapon;
+		Idle_ = WeaponCombatAction == EALSWeaponCombatAction::Idle;
 	}
 };
