@@ -87,6 +87,16 @@ void UALSCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	CharacterInformation.AimingRotation = Character->GetAimingRotation();
 	CharacterInformation.CharacterActorRotation = Character->GetActorRotation();
 
+	// Updating character states here
+	// change in future if more suitable place to implement this is found
+	CoverType = Character->GetCoverType();
+	CoverDirection = Character->GetCoverDirection();
+	CoverAction = Character->GetCoverAction();
+	CoverAttackMode = Character->GetCoverAttackMode();
+	BaseAnimSet = Character->GetBaseAnimSet();
+	ShotType = Character->GetShotType();
+	WeaponCombatAction = Character->GetWeaponCombatAction();
+
 	UpdateAimingValues(DeltaSeconds);
 	UpdateLayerValues();
 	UpdateFootIK(DeltaSeconds);

@@ -614,6 +614,15 @@ void AALSBaseCharacter::ForceUpdateCharacterState()
 	SetOverlayState(OverlayState, true);
 	SetMovementState(MovementState, true);
 	SetMovementAction(MovementAction, true);
+	// this may cause problems
+	// these calls are not present in the current bp implementation
+	SetCoverType(CoverType, true);
+	SetCoverDirection(CoverDirection, true);
+	SetCoverAction(CoverAction, true);
+	SetCoverAttackMode(CoverAttackMode, true);
+	SetBaseAnimSet(BaseAnimSet, true);
+	SetShotType(ShotType, true);
+	SetWeaponCombatAction(WeaponCombatAction, true);
 }
 
 void AALSBaseCharacter::SetHasMovementInput(bool bNewHasMovementInput)
