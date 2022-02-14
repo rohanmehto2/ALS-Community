@@ -133,6 +133,48 @@ public:
 	UFUNCTION(BlueprintGetter, Category = "ALS|Character States")
 	EALSOverlayState GetOverlayState() const { return OverlayState; }
 
+	UFUNCTION(BlueprintCallable, Category = "ALS|Character States")
+	void SetCoverType(EALSCoverType NewCoverType, bool bForce = false);
+
+	UFUNCTION(BlueprintGetter, Category = "ALS|Character States")
+	EALSCoverType GetCoverType() const { return CoverType; }
+
+	UFUNCTION(BlueprintCallable, Category = "ALS|Character States")
+	void SetCoverDirection(EALSCoverDirection NewCoverDirection, bool bForce = false);
+
+	UFUNCTION(BlueprintGetter, Category = "ALS|Character States")
+	EALSCoverDirection GetCoverDirection() const { return CoverDirection; }
+
+	UFUNCTION(BlueprintCallable, Category = "ALS|Character States")
+	void SetCoverAction(EALSCoverAction NewCoverAction, bool bForce = false);
+
+	UFUNCTION(BlueprintGetter, Category = "ALS|Character States")
+	EALSCoverAction GetCoverAction() const { return CoverAction; }
+
+	UFUNCTION(BlueprintCallable, Category = "ALS|Character States")
+	void SetCoverAttackMode(EALSCoverAttackMode NewCoverAttackMode, bool bForce = false);
+
+	UFUNCTION(BlueprintGetter, Category = "ALS|Character States")
+	EALSCoverAttackMode GetCoverAttackMode() const { return CoverAttackMode; }
+
+	UFUNCTION(BlueprintCallable, Category = "ALS|Character States")
+	void SetBaseAnimSet(EALSBaseAnimSet NewBaseAnimSet, bool bForce = false);
+
+	UFUNCTION(BlueprintGetter, Category = "ALS|Character States")
+	EALSBaseAnimSet GetBaseAnimSet() const { return BaseAnimSet; }
+
+	UFUNCTION(BlueprintCallable, Category = "ALS|Character States")
+	void SetShotType(EALSShotType NewShotType, bool bForce = false);
+
+	UFUNCTION(BlueprintGetter, Category = "ALS|Character States")
+	EALSShotType GetShotType() const { return ShotType; }
+
+	UFUNCTION(BlueprintCallable, Category = "ALS|Character States")
+	void SetWeaponCombatAction(EALSWeaponCombatAction NewWeaponCombatAction, bool bForce = false);
+
+	UFUNCTION(BlueprintGetter, Category = "ALS|Character States")
+	EALSWeaponCombatAction GetWeaponCombatAction() const { return WeaponCombatAction; }
+
 	/** Landed, Jumped, Rolling, Mantling and Ragdoll*/
 	/** On Landed*/
 	UFUNCTION(BlueprintCallable, Category = "ALS|Character States")
@@ -353,6 +395,20 @@ protected:
 
 	virtual void OnVisibleMeshChanged(const USkeletalMesh* PreviousSkeletalMesh);
 
+	virtual void OnCoverTypeChanged(EALSCoverType PreviousCoverType);
+
+	virtual void OnCoverDirectionChanged(EALSCoverDirection PreviousCoverDirection);
+
+	virtual void OnCoverActionChanged(EALSCoverAction PreviousCoverAction);
+
+	virtual void OnCoverAttackModeChanged(EALSCoverAttackMode PreviousCoverAttackMode);
+
+	virtual void OnBaseAnimSetChanged(EALSBaseAnimSet PreviousBaseAnimSet);
+
+	virtual void OnShotTypeChanged(EALSShotType PreviousShotType);
+
+	virtual void OnWeaponCombatActionChanged(EALSWeaponCombatAction PreviousWeaponCombatAction);
+
 	virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
 
 	virtual void OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
@@ -555,6 +611,27 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ALS|State Values", ReplicatedUsing = OnRep_ViewMode)
 	EALSViewMode ViewMode = EALSViewMode::ThirdPerson;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ALS|State Values")
+	EALSCoverType CoverType = EALSCoverType::High;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ALS|State Values")
+	EALSCoverDirection CoverDirection = EALSCoverDirection::Left;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ALS|State Values")
+	EALSCoverAction CoverAction = EALSCoverAction::InCover;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ALS|State Values")
+	EALSCoverAttackMode CoverAttackMode = EALSCoverAttackMode::Normal;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ALS|State Values")
+	EALSBaseAnimSet BaseAnimSet = EALSBaseAnimSet::RifleAim;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ALS|State Values")
+	EALSShotType ShotType = EALSShotType::SingleShot;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ALS|State Values")
+	EALSWeaponCombatAction WeaponCombatAction = EALSWeaponCombatAction::Shooting;
 
 	/** Movement System */
 

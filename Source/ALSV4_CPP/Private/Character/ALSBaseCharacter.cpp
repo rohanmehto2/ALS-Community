@@ -427,6 +427,75 @@ void AALSBaseCharacter::SetOverlayState(const EALSOverlayState NewState, bool bF
 	}
 }
 
+void AALSBaseCharacter::SetCoverType(const EALSCoverType NewCoverType, bool bForce)
+{
+	if (bForce || CoverType != NewCoverType)
+	{
+		const EALSCoverType Prev = CoverType;
+		CoverType = NewCoverType;
+		OnCoverTypeChanged(Prev);
+	}
+}
+
+void AALSBaseCharacter::SetCoverDirection(const EALSCoverDirection NewCoverDirection, bool bForce)
+{
+	if (bForce || CoverDirection != NewCoverDirection)
+	{
+		const EALSCoverDirection Prev = CoverDirection;
+		CoverDirection = NewCoverDirection;
+		OnCoverDirectionChanged(Prev);
+	}
+}
+
+void AALSBaseCharacter::SetCoverAction(const EALSCoverAction NewCoverAction, bool bForce)
+{
+	if (bForce || CoverAction != NewCoverAction)
+	{
+		const EALSCoverAction Prev = CoverAction;
+		CoverAction = NewCoverAction;
+		OnCoverActionChanged(Prev);
+	}
+}
+
+void AALSBaseCharacter::SetCoverAttackMode(const EALSCoverAttackMode NewCoverAttackMode, bool bForce)
+{
+	if (bForce || CoverAttackMode != NewCoverAttackMode)
+	{
+		const EALSCoverAttackMode Prev = CoverAttackMode;
+		CoverAttackMode = NewCoverAttackMode;
+		OnCoverAttackModeChanged(Prev);
+	}
+}
+
+void AALSBaseCharacter::SetBaseAnimSet(const EALSBaseAnimSet NewBaseAnimSet, bool bForce)
+{
+	if (bForce || BaseAnimSet != NewBaseAnimSet)
+	{
+		const EALSBaseAnimSet Prev = BaseAnimSet;
+		BaseAnimSet = NewBaseAnimSet;
+		OnBaseAnimSetChanged(Prev);
+	}
+}
+
+void AALSBaseCharacter::SetShotType(const EALSShotType NewShotType, bool bForce)
+{
+	if (bForce || ShotType != NewShotType)
+	{
+		const EALSShotType Prev = ShotType;
+		ShotType = NewShotType;
+		OnShotTypeChanged(Prev);
+	}
+}
+
+void AALSBaseCharacter::SetWeaponCombatAction(const EALSWeaponCombatAction NewWeaponCombatAction, bool bForce)
+{
+	if (bForce || WeaponCombatAction != NewWeaponCombatAction)
+	{
+		const EALSWeaponCombatAction Prev = WeaponCombatAction;
+		WeaponCombatAction = NewWeaponCombatAction;
+		OnWeaponCombatActionChanged(Prev);
+	}
+}
 
 void AALSBaseCharacter::Server_SetOverlayState_Implementation(EALSOverlayState NewState, bool bForce)
 {
@@ -996,6 +1065,62 @@ void AALSBaseCharacter::OnOverlayStateChanged(const EALSOverlayState PreviousSta
 	if (MainAnimInstance)
 	{
 		MainAnimInstance->OverlayState = OverlayState;
+	}
+}
+
+void AALSBaseCharacter::OnCoverTypeChanged(const EALSCoverType PreviousCoverType)
+{
+	if (MainAnimInstance)
+	{
+		MainAnimInstance->CoverType = CoverType;
+	}
+}
+
+void AALSBaseCharacter::OnCoverDirectionChanged(const EALSCoverDirection PreviousCoverDirection)
+{
+	if (MainAnimInstance)
+	{
+		MainAnimInstance->CoverDirection = CoverDirection;
+	}
+}
+
+void AALSBaseCharacter::OnCoverActionChanged(const EALSCoverAction PreviousCoverAction)
+{
+	if (MainAnimInstance)
+	{
+		MainAnimInstance->CoverAction = CoverAction;
+	}
+}
+
+void AALSBaseCharacter::OnCoverAttackModeChanged(const EALSCoverAttackMode PreviousCoverAttackMode)
+{
+	if (MainAnimInstance)
+	{
+		MainAnimInstance->CoverAttackMode = CoverAttackMode;
+	}
+}
+
+void AALSBaseCharacter::OnBaseAnimSetChanged(const EALSBaseAnimSet PreviousBaseAnimSet)
+{
+	if (MainAnimInstance)
+	{
+		MainAnimInstance->BaseAnimSet = BaseAnimSet;
+	}
+}
+
+void AALSBaseCharacter::OnShotTypeChanged(const EALSShotType PreviousShotType)
+{
+	if (MainAnimInstance)
+	{
+		MainAnimInstance->ShotType = ShotType;
+	}
+}
+
+void AALSBaseCharacter::OnWeaponCombatActionChanged(const EALSWeaponCombatAction PreviousWeaponCombatAction)
+{
+	if (MainAnimInstance)
+	{
+		MainAnimInstance->WeaponCombatAction = WeaponCombatAction;
 	}
 }
 
